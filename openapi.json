@@ -1,0 +1,185 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/users/": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Read Users",
+        "operationId": "read_users_users__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Read Users Users  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Read User",
+        "operationId": "read_user_users__user_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User Id",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "title": "Book",
+        "required": [
+          "uuid",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "title": "Uuid",
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "User": {
+        "title": "User",
+        "required": [
+          "uuid",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "title": "Uuid",
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string"
+          }
+        }
+      },
+      "UserDetail": {
+        "title": "UserDetail",
+        "required": [
+          "uuid",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "title": "Uuid",
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string"
+          },
+          "books": {
+            "title": "Books",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Book"
+            },
+            "default": []
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
